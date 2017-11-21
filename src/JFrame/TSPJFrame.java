@@ -32,6 +32,10 @@ public class TSPJFrame extends JFrame {
     private JLabel l_input_title;
     private JLabel l_output_tiltle;
 
+    private JLabel l_reslut;
+    private JLabel l_reslut_tx;
+    private JLabel l_reslut_hs;
+
 
     private JTable t_input;
     private DefaultTableModel model = null;
@@ -46,7 +50,6 @@ public class TSPJFrame extends JFrame {
 
     private JButton b_add;
     private JButton b_output;
-    private JButton b_file_chooser;
 
     private JFileChooser jfc = new JFileChooser(new File("."));
 
@@ -90,53 +93,66 @@ public class TSPJFrame extends JFrame {
 
         getContentPane().setLayout(null);
 
-        b_file_chooser = new JButton("从本地文件导入数据");
-        b_file_chooser.setBounds(110, 50, 200, 30);
-        add(b_file_chooser);
+
+        l_reslut=new JLabel("路线距离：");
+        l_reslut.setBounds(450,630,70,30);
+        add(l_reslut);
+
+        l_reslut.setVisible(false);
+
+        l_reslut_tx=new JLabel();
+        l_reslut_tx.setBounds(600,630,70,30);
+        add(l_reslut_tx);
+
+
+        l_reslut_hs=new JLabel();
+        l_reslut_hs.setBounds(830,630,70,30);
+        add(l_reslut_hs);
+
 
         l_start = new JLabel("城市A：");
-        l_start.setBounds(100, 100, 50, 30);
+        l_start.setBounds(100, 670, 50, 30);
 
         t_start = new JTextField();
-        t_start.setBounds(150, 100, 40, 30);
+        t_start.setBounds(150, 670, 40, 30);
 
         add(l_start);
         add(t_start);
 
         l_end = new JLabel("城市B：");
-        l_end.setBounds(220, 100, 50, 30);
+        l_end.setBounds(220, 670, 50, 30);
 
         t_end = new JTextField();
-        t_end.setBounds(270, 100, 40, 30);
+        t_end.setBounds(270, 670, 40, 30);
 
         add(l_end);
         add(t_end);
 
 
         l_length = new JLabel("距离：");
-        l_length.setBounds(340, 100, 50, 30);
+        l_length.setBounds(340, 670, 50, 30);
 
         t_length = new JTextField();
-        t_length.setBounds(390, 100, 40, 30);
+        t_length.setBounds(390, 670, 40, 30);
 
         add(l_length);
         add(t_length);
 
         b_add = new JButton("添加");
-        b_add.setBounds(460, 100, 60, 30);
+        b_add.setBounds(460, 670, 60, 30);
 
         add(b_add);
 
 
         b_output = new JButton("计算");
-        b_output.setBounds(550, 100, 60, 30);
+        b_output.setBounds(550, 670, 60, 30);
 
         add(b_output);
 
         String input_title = "输入数据：";
 
         l_input_title = new JLabel(input_title);
-        l_input_title.setBounds(0, 150, 100, 30);
+        l_input_title.setBounds(0, 0, 100, 30);
 
         String[][] datas = {};
         String[] titles = {"城市A", "城市B", "距离"};
@@ -147,7 +163,7 @@ public class TSPJFrame extends JFrame {
         t_input.setRowHeight(20);
 
         JScrollPane jScrollPane = new JScrollPane(t_input);
-        jScrollPane.setBounds(0, 185, 490, 650);
+        jScrollPane.setBounds(0, 35, 490, 600);
 
 
         add(jScrollPane);
@@ -155,7 +171,7 @@ public class TSPJFrame extends JFrame {
 
         String output_tiltle = "输出结果：";
         l_output_tiltle = new JLabel(output_tiltle);
-        l_output_tiltle.setBounds(510, 150, 100, 30);
+        l_output_tiltle.setBounds(510, 0, 100, 30);
 
         add(l_output_tiltle);
 
@@ -168,9 +184,8 @@ public class TSPJFrame extends JFrame {
         t_output.setRowHeight(20);
 
         JScrollPane jScrollPane1 = new JScrollPane(t_output);
-        jScrollPane1.setBounds(510, 185, 490, 650);
+        jScrollPane1.setBounds(510, 35, 490, 600);
 
-        //model1.addRow(new String[]{"1", "2"});
         add(jScrollPane1);
 
 
@@ -229,6 +244,8 @@ public class TSPJFrame extends JFrame {
                 String result_road = result.get("result_road");
                 String result_value = result.get("result_value");
 
+                l_reslut_tx.setText(result_value);
+
                 result_road = result_road.substring(1, result_road.length() - 1);
                 String[] split = result_road.split(",");
 
@@ -238,6 +255,8 @@ public class TSPJFrame extends JFrame {
 
                 String result_road2 = result2.get("result_road");
                 String result_value2 = result2.get("result_value");
+
+                l_reslut_hs.setText(result_value);
 
                 result_road2 = result_road2.substring(1, result_road2.length() - 1);
                 String[] split2 = result_road2.split(",");
@@ -250,87 +269,8 @@ public class TSPJFrame extends JFrame {
             }
         });
 
-        b_file_chooser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //打开文件选择器对话框
-                int status = jfc.showOpenDialog(getContentPane());
-                //没有选打开按钮结果提示
-                if (status != JFileChooser.APPROVE_OPTION) {
-                    JOptionPane.showMessageDialog(null, "没有文件被选中！");
-                } else {
-
-
-                    //被选中的文件保存为文件对象
-                    File file = jfc.getSelectedFile();
-                    try {
-                        TSPfromFile(file);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            }
-        });
-
     }
 
-    private void TSPfromFile(File file) throws IOException {
-        DataUtils dataUtils = new DataUtils();
-        Map<String, Double> stringDoubleMap = dataUtils.GetData(file);
-        File_TSP_InitTable(stringDoubleMap);
-
-    }
-
-    private void File_TSP_InitTable(Map<String, Double> stringDoubleMap) {
-
-        DecimalFormat dcmFmt = new DecimalFormat("0.00");
-
-        Double num = stringDoubleMap.get("city_num");
-        stringDoubleMap.remove("city_num");
-
-        String s_num = num.toString();
-        s_num=s_num.substring(0,s_num.indexOf("."));
-
-        int citynum = Integer.parseInt(s_num);
-
-        for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
-
-            String s = entry.getKey();
-            String[] split = s.split(",");
-            int a = Integer.parseInt(split[0]);
-            int b = Integer.parseInt(split[1]);
-
-            Double length = Double.valueOf(dcmFmt.format(entry.getValue()));
-
-            model.addRow(new String[]{split[0], split[1], dcmFmt.format(entry.getValue())});
-
-        }
-
-        Greedy greedy = new Greedy();
-        Map<String, String> result = greedy.GetMinRoadByTx(stringDoubleMap, citynum);
-
-        String result_road = result.get("result_road");
-        String result_value = result.get("result_value");
-
-        result_road = result_road.substring(1, result_road.length() - 1);
-        String[] split = result_road.split(",");
-
-
-       /* Back back = new Back();
-        Map<String, String> result2 = back.GetMinRoadByBack(stringDoubleMap, citynum);
-
-        String result_road2 = result2.get("result_road");
-        String result_value2 = result2.get("result_value");
-
-        result_road2 = result_road2.substring(1, result_road2.length() - 1);
-        String[] split2 = result_road2.split(",");
-*/
-        for (int i = 0; i < split.length; i++) {
-            model1.addRow(new String[]{split[i]});
-        }
-
-
-    }
 
     private void GetData(String a, String b, String l) {
         Integer v = Integer.parseInt(l);

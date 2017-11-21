@@ -20,18 +20,16 @@ public class Greedy {
     private int[] row;//代表行，选过置0
 
 
-
-
     public Map<String, String> GetMinRoadByTx(Map<String, Integer> roadBeans, String str_num) {
 
         Map<String, String> result = new HashMap<>();
 
-        InitData(roadBeans,str_num);
+        InitData(roadBeans, str_num);
 
         int[] temp = new int[cityNum];
-        int[] path =new int[cityNum+1];
-        int path_num=0;
-        path[path_num++]=1;
+        int[] path = new int[cityNum + 1];
+        int path_num = 0;
+        path[path_num++] = 1;
 
 
         int s = 0;//计算距离
@@ -51,7 +49,7 @@ public class Greedy {
             row[i] = 0;//行置0，表示已经选过
             colable[j] = 0;//列0，表示已经走过
 
-            path[path_num++]=j+1;
+            path[path_num++] = j + 1;
             //System.out.println(i + "-->" + j);
             //System.out.println(distance[i][j]);
             if (distance[i][j] == 0) {
@@ -131,7 +129,7 @@ public class Greedy {
         }
     }
 
-    public Map<String,String> GetMinRoadByTx(Map<String, Double> stringDoubleMap, int citynum) {
+    public Map<String, String> GetMinRoadByTx(Map<String, Double> stringDoubleMap, int citynum) {
         Map<String, String> result = new HashMap<>();
         this.cityNum = citynum;
         InitData(stringDoubleMap);
@@ -139,12 +137,12 @@ public class Greedy {
 
         Double[] temp = new Double[cityNum];
 
-        for (int i=0;i<cityNum;i++){
-            temp[i]=0.0;
+        for (int i = 0; i < cityNum; i++) {
+            temp[i] = 0.0;
         }
-        int[] path =new int[cityNum+1];
-        int path_num=0;
-        path[path_num++]=1;
+        int[] path = new int[cityNum + 1];
+        int path_num = 0;
+        path[path_num++] = 1;
 
 
         Double s = 0.0;//计算距离
@@ -164,7 +162,7 @@ public class Greedy {
             row[i] = 0;//行置0，表示已经选过
             colable[j] = 0;//列0，表示已经走过
 
-            path[path_num++]=j+1;
+            path[path_num++] = j + 1;
             //System.out.println(i + "-->" + j);
             //System.out.println(distance[i][j]);
             if (distance2[i][j] == 0) {
@@ -185,7 +183,7 @@ public class Greedy {
 
     private int selectmin(Double[] p) {
         int j = 0, k = 0;
-        Double  m = p[0];
+        Double m = p[0];
         //寻找第一个可用节点，注意最后一次寻找，没有可用节点
         while (colable[j] == 0) {
             j++;
