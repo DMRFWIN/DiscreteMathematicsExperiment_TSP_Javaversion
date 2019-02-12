@@ -3,21 +3,17 @@ package JFrame;
 import Algorithm.Back;
 import Algorithm.Greedy;
 import Bean.RoadBean;
-import Utils.DataUtils;
-import com.sun.java.swing.plaf.gtk.GTKConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Position;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import java.util.List;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TSPJFrame extends JFrame {
 

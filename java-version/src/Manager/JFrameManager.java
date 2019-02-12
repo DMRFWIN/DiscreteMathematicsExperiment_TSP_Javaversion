@@ -1,11 +1,6 @@
 package Manager;
 
-import Bean.RoadBean;
 import JFrame.ChooseJFrame;
-import JFrame.TSPJFrame;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import java.util.Arrays;
 
 public class JFrameManager {
 

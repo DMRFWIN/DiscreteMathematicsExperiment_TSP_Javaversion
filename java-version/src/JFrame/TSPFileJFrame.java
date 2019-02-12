@@ -1,8 +1,6 @@
 package JFrame;
 
-import Algorithm.Back;
 import Algorithm.Greedy;
-import Bean.RoadBean;
 import Utils.DataUtils;
 
 import javax.swing.*;
@@ -10,8 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
